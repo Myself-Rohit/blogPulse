@@ -1,8 +1,10 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRoutes from "./controllers/user.controller.js";
+import userRoutes from "./routes/user.route.js";
+import signup from "./routes/auth.route.js";
 const app = express();
+app.use(express.json());
 dotenv.config();
 mongoose
   .connect(process.env.URI)
@@ -14,3 +16,4 @@ app.listen(process.env.PORT, () => {
 });
 
 app.use("/api/user", userRoutes);
+app.use("/api/auth", signup);
