@@ -5,7 +5,7 @@ import { errorHandler } from "../utils/error.js";
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
-    return next(errorHandler(400, "All fields are reqired"));
+    next(errorHandler(400, "All fields are reqired"));
   }
 
   const hashPassword = bcryptjs.hashSync(password, 10);
@@ -16,7 +16,7 @@ export const signup = async (req, res, next) => {
   });
   try {
     await newUser.save();
-    res.send("user created successfully");
+    res.json("user created successfully");
   } catch (error) {
     next(error);
   }
