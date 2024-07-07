@@ -14,7 +14,7 @@ function Dashboard() {
       <div className="">
         <DashSidebar />
       </div>
-      <div className="">{tab == "profile" && <DashProfile />}</div>
+      <div className="w-screen">{tab == "profile" && <DashProfile />}</div>
     </div>
   );
 }
