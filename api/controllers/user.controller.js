@@ -6,43 +6,65 @@ export const userRoutes = (req, res) => {
 };
 
 
-export const updateRoute = async (req,res,next)=>{
-  if(req.user.id !== req.params.userId){
-    return next(errorHandler(403,"You are not allowed to update this user"))
+export const updateRoute = async (req, res, next) => {
+  if (req.user.id !== req.params.userId) {
+    return next(errorHandler(403, "You are not allowed to update this user"))
   }
 
   if (req.body.password) {
-    if(req.body.password.length < 6){
-      return next(400,"password must be at least 6 characters")
+    if (req.body.password.length < 6) {
+      return next(400, "password must be at least 6 characters")
     }
     req.body.password = bcryptjs.hashSync(req.body.password, 10)
   }
 
   if (req.body.username) {
-    if(req.body.username.length < 6 || req.body.username.length>20){
-      return next(400,"username must be between 6 and 20 characters")
+    if (req.body.username.length < 6 || req.body.username.length > 20) {
+      return next(400, "username must be between 6 and 20 characters")
     }
-    if(req.body.username && !req.body.username.match(/^[a-zA-Z0-9]+$/)){
-      return next(errorHandler(400,"Username can only contain letters and numbers"))
+    if (req.body.username && !req.body.username.match(/^[a-zA-Z0-9]+$/)) {
+      return next(errorHandler(400, "Username can only contain letters and numbers"))
     }
   }
 
-  try{
+  try {
 
-    const updateUser = await user.findByIdAndUpdate(req.params.userId,{
-      $set:{
-        username:req.body.username,
-        email:req.body.email,
-        password:req.body.password,
-        profilePicture:req.body.profilePicture,
+    const updateUser = await user.findByIdAndUpdate(req.params.userId, {
+      $set: {
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        profilePicture: req.body.profilePicture,
       }
     }, { new: true })
     const { password, ...rest } = updateUser._doc;
-    
+
     res.status(201).json(rest)
 
-  }catch(err){
-next(err)
+  } catch (err) {
+    next(err)
   }
 
+}
+
+export const deleteRoute = async (req, res, next) => {
+  if (req.user.id !== req.params.userId) {
+    return next(errorHandler(400, "You are not allowed to delete this user"))
+  }
+
+  try {
+    await user.findByIdAndDelete(req.params.userId);
+    res.status(200).json("user has been deleted")
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const signoutRoute = (req, res, next) => {
+  try {
+    res.clearCookie("access_token").status(200).json("user has been signed out");
+  } catch (error) {
+    next(error)
+  }
 }

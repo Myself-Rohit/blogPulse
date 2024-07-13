@@ -1,10 +1,13 @@
 import express from "express";
-import  {userRoutes, updateRoute } from "../controllers/user.controller.js";
+import  {userRoutes, updateRoute, deleteRoute, signoutRoute } from "../controllers/user.controller.js";
 import { verifyToken } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
 router.get("/", userRoutes);
-router.put("/update/:userId",verifyToken,updateRoute)
+router.put("/update/:userId", verifyToken, updateRoute)
+router.delete("/delete/:userId", verifyToken, deleteRoute)
+router.post("/signout",signoutRoute)
+
 
 export default router;
