@@ -36,7 +36,7 @@ export const signin = async (req, res, next) => {
     if (!validPassword) {
       return next(errorHandler(400, "Invalid Padssword"));
     }
-    const token = jwt.sign({ id: validUser._id }, process.env.SECRET_KEY);
+    const token = jwt.sign({ id: validUser._id,isAdmin:validUser.isAdmin }, process.env.SECRET_KEY);
     const { password: pass, ...rest } = validUser._doc;
     res
       .status(200)

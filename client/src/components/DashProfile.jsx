@@ -12,9 +12,10 @@ import { app } from "../firebase.js";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { deleteFailure, deleteStart, deleteSuccess, signOutSuccess, updateFailure, updateSuccess } from "../redux/user/userSlice.js";
+import { Link } from "react-router-dom";
 
 function DashProfile() {
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error,loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(null);
@@ -186,9 +187,14 @@ function DashProfile() {
           defaultValue={currentUser.email} onChange={handleChange}
         />
         <TextInput type="password" id="password" placeholder="**************" onChange={handleChange} />
-        <Button type="submit" gradientDuoTone="purpleToBlue">
-          Update
+        <Button type="submit" outline gradientDuoTone="purpleToBlue" disabled={loading || uploadProgress}>
+          {loading?"Loading...":"Update"}
         </Button>
+        {currentUser.isAdmin && <Link to="/create-post">
+          <Button gradientDuoTone="purpleToPink" className="w-full">
+          Create Post
+        </Button>
+        </Link>}
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span onClick={() => setShowModal(true)} className="curser-pointer">Delete Account</span>
