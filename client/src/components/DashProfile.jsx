@@ -50,7 +50,8 @@ function DashProfile() {
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
         method: "DELETE",
       })
-      const data = res.json();
+      const data = await res.json();
+
       if (!res.ok) {
         dispatch(deleteFailure(data.message))
       } else {
@@ -68,10 +69,11 @@ function DashProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUploadError(null);
     if (Object.keys(formData).length === 0) {
-      return dispatch(updateFailure("No field changed"))
+      return dispatch(updateFailure("No field Changed"))
     }
-    if (uploadProgress && uploadProgress !== 100) {
+    if (uploadProgress && uploadProgress != 100) {
       return;
     }
     try {
@@ -108,6 +110,7 @@ function DashProfile() {
       uploadFile();
     }
   }, [imageFile]);
+  
   const uploadFile = async () => {
     setUploadError(null);
     const storage = getStorage(app);
@@ -187,7 +190,7 @@ function DashProfile() {
           defaultValue={currentUser.email} onChange={handleChange}
         />
         <TextInput type="password" id="password" placeholder="**************" onChange={handleChange} />
-        <Button type="submit" outline gradientDuoTone="purpleToBlue" disabled={loading || uploadProgress}>
+        <Button type="submit" outline gradientDuoTone="purpleToBlue" disabled={loading || (uploadProgress&&uploadProgress!=100)}>
           {loading?"Loading...":"Update"}
         </Button>
         {currentUser.isAdmin && <Link to="/create-post">
