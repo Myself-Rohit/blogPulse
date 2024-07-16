@@ -84,12 +84,9 @@ function DashUsers() {
                                     <Table.Row className="bg-white dark:bg-gray-800 dark:border-gray-700">
                                         <Table.Cell>{new Date(user.createdAt).toLocaleDateString()}</Table.Cell>
                                         <Table.Cell>
-                                            <Link className="font-medium text-gray-900 dark:text-white"
-                                             to={`/post/${user.slug}`}>
                                             <img src={user.profilePicture}
                                             alt={user.username}
                                             className="w-10 h-10 rounded-full object-cover bg-gray-500"/>
-                                            </Link>
                                         </Table.Cell>
                                         <Table.Cell className="font-semibold">{user.username}</Table.Cell>
                                         <Table.Cell>{user.email}</Table.Cell>
