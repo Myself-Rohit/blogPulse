@@ -1,12 +1,30 @@
 import { Alert, Button, Textarea } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Comment from "./Comment";
 
 function CommentSection({ postId }) {
 	const { currentUser } = useSelector((state) => state.user);
 	const [comment, setComment] = useState("");
+	const [comments, setComments] = useState([]);
 	const [error, setError] = useState(null);
+
+	useEffect(() => {
+		const getComments = async () => {
+			try {
+				const res = await fetch(`/api/comment/getcomments/${postId}`);
+				const data = await res.json();
+				console.log(data);
+				if (res.ok) {
+					setComments(data);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		getComments();
+	}, [postId]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -26,12 +44,40 @@ function CommentSection({ postId }) {
 				}),
 			});
 			const data = await res.json();
-			console.log(data);
 			if (res.ok) {
 				setComment("");
+				setComments([data, ...comments]);
 			}
 		} catch (error) {
 			setError(error.message);
+		}
+	};
+
+	const handleLike = async (commentId) => {
+		try {
+			if (!currentUser) {
+				return;
+			}
+			const res = await fetch(`/api/comment/likecomment/${commentId}`, {
+				method: "PUT",
+			});
+			const data = await res.json();
+			if (res.ok) {
+				setComments(
+					comments.map((comment) => {
+						if (comment._id === commentId) {
+							return {
+								...comment,
+								likes: data.likes,
+								numberOfLikes: data.likes.length,
+							};
+						}
+						return comment;
+					})
+				);
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 	return (
@@ -81,6 +127,27 @@ function CommentSection({ postId }) {
 					</div>
 					{error && <Alert color="failure">{error}</Alert>}
 				</form>
+			)}
+			{comments.length ? (
+				<>
+					<div className="flex items-center gap-1 text-sm my-5">
+						<p>Comments</p>
+						<div className="border border-gray-400 px-2 py-1 rounded-sm">
+							<p>{comments.length}</p>
+						</div>
+					</div>
+					{comments.map((comment) => {
+						return (
+							<Comment
+								key={comment._id}
+								comment={comment}
+								onLike={handleLike}
+							/>
+						);
+					})}
+				</>
+			) : (
+				<p className="text-sm my-5">No comments yet1</p>
 			)}
 		</div>
 	);
