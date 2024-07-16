@@ -11,26 +11,28 @@ import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
-        <Route element={<AdminProtectedRoute />}>
-          <Route path="/create-post" element={<CreatePost />} />
-          <Route path="/update-post/:postId" element={<UpdatePost />} />
-        </Route>
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/post/:postSlug" element={<PostPage/>}/>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignIn />} />
-      </Routes>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<ScrollToTop />
+			<Header />
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/about" element={<About />} />
+				<Route element={<ProtectedRoute />}>
+					<Route path="/dashboard" element={<Dashboard />} />
+				</Route>
+				<Route element={<AdminProtectedRoute />}>
+					<Route path="/create-post" element={<CreatePost />} />
+					<Route path="/update-post/:postId" element={<UpdatePost />} />
+				</Route>
+				<Route path="/projects" element={<Projects />} />
+				<Route path="/post/:postSlug" element={<PostPage />} />
+				<Route path="/signup" element={<SignUp />} />
+				<Route path="/signin" element={<SignIn />} />
+			</Routes>
+		</BrowserRouter>
+	);
 }
