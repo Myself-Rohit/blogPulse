@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 function CallToAction() {
 	return (
 		<>
-			<div class="flex border border-teal-500 p-3 justify-center items-center rounded-tl-3xl rounded-br-3xl flex-col sm:flex-row text-center">
-				<div class="flex-1 justify-center flex flex-col">
-					<h2 class="text-2xl">
+			<div className="flex border border-teal-500 p-3 justify-center items-center rounded-tl-3xl rounded-br-3xl flex-col sm:flex-row text-center">
+				<div className="flex-1 justify-center flex flex-col">
+					<h2 className="text-2xl">
 						Want to learn HTML, CSS and JavaScript by building fun and engaging
 						projects?
 					</h2>
-					<p class="text-gray-500 my-2">
+					<p className="text-gray-500 my-2">
 						Check our 100 js prjects website and start building your own
 						projects
 					</p>
@@ -22,7 +22,7 @@ function CallToAction() {
 						</Link>
 					</Button>
 				</div>
-				<div class="flex-1 p-7">
+				<div className="flex-1 p-7">
 					<img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20221114110410/Top-10-JavaScript-Project-Ideas-For-Beginners-2023.png" />
 				</div>
 			</div>

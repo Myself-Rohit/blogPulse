@@ -15,7 +15,6 @@ function CommentSection({ postId }) {
 			try {
 				const res = await fetch(`/api/comment/getcomments/${postId}`);
 				const data = await res.json();
-				console.log(data);
 				if (res.ok) {
 					setComments(data);
 				}
@@ -80,6 +79,7 @@ function CommentSection({ postId }) {
 			console.log(error);
 		}
 	};
+
 	return (
 		<div className="max-w-2xl mx-auto w-full p-3">
 			{currentUser ? (
@@ -142,6 +142,8 @@ function CommentSection({ postId }) {
 								key={comment._id}
 								comment={comment}
 								onLike={handleLike}
+								setComments={setComments}
+								allComments={comments}
 							/>
 						);
 					})}
