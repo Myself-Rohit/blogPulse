@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Button, Modal, Table } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { FaCheck, FaTimes } from "react-icons/fa";
 
 function Dashcomments() {
 	const { currentUser } = useSelector((state) => state.user);
@@ -13,13 +12,15 @@ function Dashcomments() {
 
 	useEffect(() => {
 		const fetchcomments = async () => {
+			const startIndex = comments.length;
 			try {
-				const res = await fetch(`/api/comment/getcomments`);
+				const res = await fetch(
+					`/api/comment/getcomments?startIndex=${startIndex}`
+				);
 				const data = await res.json();
 				if (res.ok) {
-					console.log(data);
-					setcomments(data);
-					if (data.length < 9) {
+					setcomments((prev) => [...prev, ...data.allcomments]);
+					if (data.allcomments.length < 5) {
 						setShowmore(false);
 					}
 				}
@@ -40,8 +41,8 @@ function Dashcomments() {
 			);
 			const data = await res.json();
 			if (res.ok) {
-				setcomments((prev) => [...prev, ...data.userWithoutPassword]);
-				if (data.userWithoutPassword.length < 9) {
+				setcomments((prev) => [...prev, ...data.allcomments]);
+				if (data.allcomments.length < 5) {
 					setShowmore(false);
 				}
 			}

@@ -100,11 +100,30 @@ export const getAllComments = async (req, res, next) => {
 		return next(errorHandler(403, "You are not allowed to see this page"));
 	}
 	try {
-		const allcomments = await Comment.find();
+		const startIndex = req.query.startIndex || 0;
+		const limit = req.query.limit || 5;
+		const sortDirection = req.query.sortDirection === "asc" ? 1 : -1;
+
+		const allcomments = await Comment.find()
+			.sort({ createdAt: sortDirection })
+			.skip(startIndex)
+			.limit(limit);
 		if (!allcomments) {
 			return next(errorHandler("No comments yet"));
 		}
-		res.status(200).json(allcomments);
+		const totalComments = await Comment.countDocuments();
+
+		const now = new Date();
+		const oneMonthsAgo = new Date(
+			now.getFullYear(),
+			now.getMonth() - 1,
+			now.getDate()
+		);
+		const lastMonthComments = await Comment.countDocuments({
+			createdAt: { $gte: oneMonthsAgo },
+		});
+
+		res.status(200).json({ allcomments, totalComments, lastMonthComments });
 	} catch (error) {
 		next(error);
 	}
