@@ -94,3 +94,18 @@ export const deleteComment = async (req, res, next) => {
 		next(error);
 	}
 };
+
+export const getAllComments = async (req, res, next) => {
+	if (!req.user.isAdmin) {
+		return next(errorHandler(403, "You are not allowed to see this page"));
+	}
+	try {
+		const allcomments = await Comment.find();
+		if (!allcomments) {
+			return next(errorHandler("No comments yet"));
+		}
+		res.status(200).json(allcomments);
+	} catch (error) {
+		next(error);
+	}
+};
