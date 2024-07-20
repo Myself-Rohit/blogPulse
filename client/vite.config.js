@@ -6,7 +6,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			"/api": {
-				target: "https://blogpulse-iyt9.onrender.com",
+				target: "http://localhost:8000",
 				secure: false,
 			},
 		},
