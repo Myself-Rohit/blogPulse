@@ -117,27 +117,34 @@ function Comment({ comment, onLike, allComments, setComments }) {
 									}`}
 								/>
 							</button>
+
 							<p className="text-gray-400">
 								{comment.numberOfLikes > 0 &&
 									comment.numberOfLikes +
 										" " +
 										(comment.numberOfLikes === 1 ? "Like" : "Likes")}
 							</p>
-							<p
-								className="cursor-pointer text-gray-400 hover:text-blue-500"
-								onClick={() => {
-									setEditValue(comment.content);
-									setShowEdit(true);
-								}}
-							>
-								Edit
-							</p>
-							<p
-								className="cursor-pointer text-gray-400 hover:text-red-500"
-								onClick={() => setShowModal(true)}
-							>
-								Delete
-							</p>
+
+							{(currentUser.isAdmin || comment.userId === currentUser._id) && (
+								<p
+									className="cursor-pointer text-gray-400 hover:text-blue-500"
+									onClick={() => {
+										setEditValue(comment.content);
+										setShowEdit(true);
+									}}
+								>
+									Edit
+								</p>
+							)}
+
+							{(currentUser.isAdmin || comment.userId === currentUser._id) && (
+								<p
+									className="cursor-pointer text-gray-400 hover:text-red-500"
+									onClick={() => setShowModal(true)}
+								>
+									Delete
+								</p>
+							)}
 						</div>
 						<Modal
 							show={showModal}

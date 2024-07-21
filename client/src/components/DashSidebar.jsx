@@ -40,11 +40,13 @@ function DashSidebar() {
 		<Sidebar className="w-full md:w-56">
 			<Sidebar.Items>
 				<Sidebar.ItemGroup>
-					<Link to="/dashboard?tab=dash">
-						<Sidebar.Item as="div" active={tab === "dash"} icon={HiChartPie}>
-							Dashboard
-						</Sidebar.Item>
-					</Link>
+					{currentUser.isAdmin && (
+						<Link to="/dashboard?tab=dash">
+							<Sidebar.Item as="div" active={tab === "dash"} icon={HiChartPie}>
+								Dashboard
+							</Sidebar.Item>
+						</Link>
+					)}
 					<Link to="/dashboard?tab=profile">
 						<Sidebar.Item
 							as="div"
