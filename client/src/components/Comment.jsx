@@ -104,19 +104,21 @@ function Comment({ comment, onLike, allComments, setComments }) {
 					<>
 						<p className="text-gray-500 pb-2">{comment.content}</p>
 						<div className="pt-2 flex items-center text-xs max-w-fit gap-2 text-gray-500 border-t dark:border-gray-700">
-							<button
-								type="button"
-								onClick={() => onLike(comment._id)}
-								className={`text-gray-400 `}
-							>
-								<FaThumbsUp
-									className={`${
-										currentUser &&
-										comment.likes.includes(currentUser._id) &&
-										"text-blue-500"
-									}`}
-								/>
-							</button>
+							{currentUser && (
+								<button
+									type="button"
+									onClick={() => onLike(comment._id)}
+									className={`text-gray-400 `}
+								>
+									<FaThumbsUp
+										className={`${
+											currentUser &&
+											comment.likes.includes(currentUser._id) &&
+											"text-blue-500"
+										}`}
+									/>
+								</button>
+							)}
 
 							<p className="text-gray-400">
 								{comment.numberOfLikes > 0 &&
@@ -125,26 +127,28 @@ function Comment({ comment, onLike, allComments, setComments }) {
 										(comment.numberOfLikes === 1 ? "Like" : "Likes")}
 							</p>
 
-							{(currentUser.isAdmin || comment.userId === currentUser._id) && (
-								<p
-									className="cursor-pointer text-gray-400 hover:text-blue-500"
-									onClick={() => {
-										setEditValue(comment.content);
-										setShowEdit(true);
-									}}
-								>
-									Edit
-								</p>
-							)}
+							{currentUser &&
+								(currentUser.isAdmin || comment.userId === currentUser._id) && (
+									<p
+										className="cursor-pointer text-gray-400 hover:text-blue-500"
+										onClick={() => {
+											setEditValue(comment.content);
+											setShowEdit(true);
+										}}
+									>
+										Edit
+									</p>
+								)}
 
-							{(currentUser.isAdmin || comment.userId === currentUser._id) && (
-								<p
-									className="cursor-pointer text-gray-400 hover:text-red-500"
-									onClick={() => setShowModal(true)}
-								>
-									Delete
-								</p>
-							)}
+							{currentUser &&
+								(currentUser.isAdmin || comment.userId === currentUser._id) && (
+									<p
+										className="cursor-pointer text-gray-400 hover:text-red-500"
+										onClick={() => setShowModal(true)}
+									>
+										Delete
+									</p>
+								)}
 						</div>
 						<Modal
 							show={showModal}

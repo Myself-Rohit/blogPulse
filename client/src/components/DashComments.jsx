@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Button, Modal, Table } from "flowbite-react";
+import { Button, Modal, Spinner, Table } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 function Dashcomments() {
@@ -122,7 +122,7 @@ function Dashcomments() {
 					)}
 				</>
 			) : (
-				<p>You have no comments yet!</p>
+				<Spinner size="xl" />
 			)}
 			<Modal
 				show={showModal}
