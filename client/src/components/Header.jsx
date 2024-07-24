@@ -52,7 +52,7 @@ function Header() {
 		navigate(`/search?${stringUrl}`);
 	};
 	return (
-		<Navbar className="border-b-2">
+		<Navbar className="border-b-2 sticky top-0 z-50">
 			<Link
 				to={"/"}
 				className="whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
