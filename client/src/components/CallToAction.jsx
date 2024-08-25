@@ -13,7 +13,9 @@ function CallToAction() {
 					</h2>
 
 					<Button gradientDuoTone="purpleToPink">
-						<Link to="https://www.100jsprojects.com/">Visit My Portfolio</Link>
+						<Link to="https://fancy-salamander-26ac46.netlify.app/">
+							Visit My Portfolio
+						</Link>
 					</Button>
 				</div>
 				<div className="flex-1 p-7">
