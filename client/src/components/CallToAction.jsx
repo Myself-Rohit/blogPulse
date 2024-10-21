@@ -12,11 +12,11 @@ function CallToAction() {
 						Explore my portfolio and see the exciting projects I've created.
 					</h2>
 
-					<Button gradientDuoTone="purpleToPink">
-						<Link to="https://fancy-salamander-26ac46.netlify.app/">
+					<Link to="https://fancy-salamander-26ac46.netlify.app/">
+						<Button className="w-full" gradientDuoTone="purpleToPink">
 							Visit My Portfolio
-						</Link>
-					</Button>
+						</Button>
+					</Link>
 				</div>
 				<div className="flex-1 p-7">
 					<img src={portfolioImage} />

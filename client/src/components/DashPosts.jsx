@@ -26,9 +26,8 @@ function DashPosts() {
 				console.log(error.message);
 			}
 		};
-		if (currentUser.isAdmin) {
-			fetchPosts();
-		}
+
+		fetchPosts();
 	}, [currentUser._id]);
 
 	const handleShowMore = async () => {
@@ -68,7 +67,7 @@ function DashPosts() {
 	};
 	return (
 		<div className="table-auto md:mx-auto overflow-x-scroll">
-			{currentUser.isAdmin && userPosts.length ? (
+			{userPosts.length ? (
 				<>
 					<Table hoverable className="shadow-md">
 						<Table.Head>

@@ -58,7 +58,7 @@ function DashSidebar() {
 							Profile
 						</Sidebar.Item>
 					</Link>
-					{currentUser.isAdmin && (
+					{
 						<Link to="/dashboard?tab=posts">
 							<Sidebar.Item
 								as="div"
@@ -69,7 +69,7 @@ function DashSidebar() {
 								Post
 							</Sidebar.Item>
 						</Link>
-					)}
+					}
 					{currentUser.isAdmin && (
 						<Link to="/dashboard?tab=users">
 							<Sidebar.Item

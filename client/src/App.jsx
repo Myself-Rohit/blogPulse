@@ -7,7 +7,6 @@ import SignUp from "./pages/SignUp";
 import Projects from "./pages/Projects";
 import Header from "./components/Header";
 import ProtectedRoute from "./components/ProtectedRoute";
-import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
@@ -26,10 +25,8 @@ export default function App() {
 				<Route element={<ProtectedRoute />}>
 					<Route path="/dashboard" element={<Dashboard />} />
 				</Route>
-				<Route element={<AdminProtectedRoute />}>
-					<Route path="/create-post" element={<CreatePost />} />
-					<Route path="/update-post/:postId" element={<UpdatePost />} />
-				</Route>
+				<Route path="/update-post/:postId" element={<UpdatePost />} />
+				<Route path="/create-post" element={<CreatePost />} />
 				<Route path="/projects" element={<Projects />} />
 				<Route path="/post/:postSlug" element={<PostPage />} />
 				<Route path="/signup" element={<SignUp />} />
